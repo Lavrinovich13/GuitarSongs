@@ -1,0 +1,43 @@
+﻿<div class="child-container">
+    <div class="baseSongInfoCard shadow">
+        <div class="mdl-card__title mdl-card--expand" data-ng-model="baseSong">
+            <h4>
+                {{ baseSong.baseSongName }}
+                <br />
+                <span class="inline-text">
+                    {{ baseSong.singer.singerName }}
+                </span>
+                <br/>
+                <span class="inline-text">
+                    <i class="material-icons">mic</i>
+                    {{ baseSong.musicNum }}
+                </span>
+                <span class="inline-text">
+                    <i class="material-icons">movie</i>
+                    {{ baseSong.videoNum }}
+                </span>
+                <span class="inline-text">
+                    <i class="material-icons">menu</i>
+                    {{ baseSong.textNum }}
+                </span>
+                
+            </h4>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                View full info
+            </a>
+            <div class="mdl-layout-spacer"></div>
+            <span>
+                <i class="material-icons">favorite</i>
+                {{ baseSong.linkNum }}
+            </span>
+        </div>
+    </div>
+
+    <div class="addBaseSongButton">
+        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" href="#/addSong">
+            <i class="material-icons">add</i>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+﻿<div class="mdl-card-wide mdl-card mdl-shadow--2dp center-card">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">New song</h2>
+    </div>
+    <div class="mdl-card__supporting-text" ng-model="baseSong">
+        <div class="mdl-textfield">
+            <input class="mdl-textfield__input" type="text" ng-model="baseSong.name" placeholder="Name..." required>
+        </div>
+        <div class="mdl-textfield">
+            <input class="mdl-textfield__input" list="genreDataList" type="text" ng-model="baseSong.genreName" placeholder="Genre..." required>
+            <datalist id="genreDataList">
+                <option ng-repeat="genre in genres">{{genre.genreName}}</option>
+            </datalist>
+        </div>
+        <div class="mdl-textfield">
+            <input class="mdl-textfield__input" list="singerDataList" type="text" ng-model="baseSong.singerName" placeholder="Singer..." required>
+            <datalist id="singerDataList">
+                <option ng-repeat="singer in singers">{{singer.singerName}}</option>
+            </datalist>
+        </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border videoArea">
+        <span class="mdl-card__supporting-text">
+            Video
+        </span>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" ng-click="isAddVideoHide=!isAddVideoHide">
+            <i class="material-icons">add</i>
+        </button>
+        <div id="videoContainer">
+            <div ng-repeat="video in baseSong.videos">
+                <iframe width="560" height="315" ng-src="{{trustSrc(video.url)}}" frameborder="0"></iframe>
+                <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="baseSong.videos.splice($index,1)">
+                    <i class="material-icons">delete</i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border musicArea">
+        <span class="mdl-card__supporting-text">
+            Music
+        </span>
+    </div>
+
+    <div class="mdl-card__supporting-text" ng-model="baseSong">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" ng-click="isAddMusicHide=!isAddMusicHide">
+            <i class="material-icons">add</i>
+        </button>
+        <div ng-repeat="music in baseSong.musics">
+            <p>{{music.name}}</p>
+            <audio controls="controls" ng-src="{{trustSrc(music.url)}}"></audio>
+            <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="baseSong.musics.splice($index,1)">
+                <i class="material-icons">delete</i>
+            </button>
+        </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border textArea">
+        <span class="mdl-card__supporting-text">
+            Text
+        </span>
+    </div>
+    <div class="mdl-card__supporting-text" ng-model="baseSong">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" ng-click="isAddTextHide=!isAddTextHide">
+            <i class="material-icons">add</i>
+        </button>
+        <div ng-repeat="text in baseSong.texts">
+            <label>{{text.name}}</label>
+            <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="editDocument($index)">
+                <i class="material-icons">edit</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon" ng-click="baseSong.texts.splice($index,1)">
+                <i class="material-icons">delete</i>
+            </button>
+        </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addSong(baseSong)">
+            Save
+        </a>
+    </div>
+</div>
+
+<!--Modal divs-->
+<div class="modal-div" ng-hide="isAddVideoHide">
+    <div class="mdl-card mdl-shadow--2dp modal-center-card" ng-hide="isAddVideoHide">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">New video</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-textfield">
+                <input class="mdl-textfield__input" type="text" ng-model="videoUrl" placeholder="Url..." required>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" 
+               ng-click="addNewVideo(videoUrl)">
+                Save
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal-div" ng-hide="isAddMusicHide">
+    <div class="mdl-card mdl-shadow--2dp modal-center-card" ng-hide="isAddMusicHide">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">New music</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-textfield">
+                <input class="mdl-textfield__input" ng-model="musicName" type="text" placeholder="Name..." required>
+            </div>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-textfield">
+                <input class="mdl-textfield__input" ng-model="musicUrl" placeholder="Url..." required>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addNewMusic(musicName, musicUrl)">
+                Save
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal-div" ng-hide="isAddTextHide">
+    <div class="mdl-card-wide-noImg mdl-card mdl-shadow--2dp modal-center-card" ng-hide="isAddTextHide">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">New text</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-textfield">
+                <input class="mdl-textfield__input" ng-model="text.name" type="text" placeholder="Name..." required>
+            </div>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-card-textfield">
+                <input class="jqteTextArea mdl-textfield__input" ng-model="text.content" id="textEditor" required>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addNewText(text.name, text.content)">
+                Save
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.jqteTextArea').jqte();
+</script>

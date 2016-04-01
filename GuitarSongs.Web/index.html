@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="AngularAuthApp">
+<head>
+    <meta name="description" content="SPA built using angularjs,authentication is done using bearer token,back end built using Asp.net web api 2 and OWIN Framework,creatd by Taiseer Joudeh" />
+    <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+    <title>MyGuitar</title>
+
+    <!--Styles-->
+    <link href="content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/css/site.css" rel="stylesheet" />
+    <link href="content/css/loading-bar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="content/css/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="content/css/social-buttons.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="./content/css/jquery-te-1.4.0.css">
+
+    <!--Scripts-->
+    <script src="scripts/material.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery-1.10.2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./scripts/jquery-te-1.4.0.js" charset="utf-8"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-controller="indexController">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">GuitarSongs</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon"
+                           for="waterfall-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="sample"
+                               id="waterfall-exp">
+                    </div>
+                </div>
+            </div>
+            <!-- Tabs -->
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <div class="mdl-layout-spacer"></div>
+                <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
+                <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
+                <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
+                <span class="mdl-layout__tab" ><a  href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a></span>
+            </div>
+        </header>
+        <main class="mdl-layout__content">
+                <div class="page-content" data-ng-view="" >
+                </div>
+        </main>
+    </div>
+
+    <!-- 3rd party libraries -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="scripts/angular-local-storage.min.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
+
+    <!-- Load app main script -->
+    <script src="app/app.js?v=2"></script>
+
+    <!-- Load services -->
+    <script src="app/services/authInterceptorService.js?v=2"></script>
+    <script src="app/services/authService.js?v=2"></script>
+    <script src="app/services/tokensManagerService.js?v=2"></script>
+    <script src="app/services/baseSongService.js"></script>
+    <script src="app/services/singerService.js"></script>
+    <script src="app/services/genreService.js"></script>
+    <!-- Load controllers -->
+    <script src="app/controllers/indexController.js?v=2"></script>
+    <script src="app/controllers/homeController.js?v=2"></script>
+    <script src="app/controllers/loginController.js?v=2"></script>
+    <script src="app/controllers/signupController.js?v=2"></script>
+    <script src="app/controllers/tokensManagerController.js?v=2"></script>
+    <script src="app/controllers/baseSongController.js"></script>
+    <script src="app/controllers/addBaseSongController.js"></script>
+    <!-- Load custom filters -->
+    <!-- Load custom directives -->
+</body>
+</html>
