@@ -31,6 +31,17 @@
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
+                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
+                    <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
+                    <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
+                    <a class="mdl-layout__tab" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
+                </div>
+            </div>
+            <!-- Tabs -->
+          
+            <div class="mdl-layout__header-row" ng-controller="baseSongController">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
                     <label class="mdl-button mdl-js-button mdl-button--icon"
                            for="waterfall-exp">
                         <i class="material-icons">search</i>
@@ -40,14 +51,11 @@
                                id="waterfall-exp">
                     </div>
                 </div>
-            </div>
-            <!-- Tabs -->
-            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
                 <div class="mdl-layout-spacer"></div>
-                <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
-                <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
-                <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
-                <span class="mdl-layout__tab" ><a  href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a></span>
+                <nav class="mdl-navigation">
+                    <button class="mdl-button mdl-js-button" ng-click="getRecentSongs()">Recent</button>
+                    <button class="mdl-button mdl-js-button" ng-click="getPopularSongs()">Popular</button>
+                </nav>
             </div>
         </header>
         <main class="mdl-layout__content">

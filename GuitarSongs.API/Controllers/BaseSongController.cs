@@ -17,16 +17,16 @@ namespace AngularJSAuthentication.API.Controllers
     {
         protected IBaseSongService BaseSongService;
 
-        public BaseSongController()
-        {
-            BaseSongService = new BaseSongService(new BaseSongRepository(new SqlConnection(
-                        ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
-        }
-
-        //public BaseSongController(IBaseSongService baseSongService)
+        //public BaseSongController()
         //{
-        //    BaseSongService = baseSongService;
+        //    BaseSongService = new BaseSongService(new BaseSongRepository(new SqlConnection(
+        //                ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
         //}
+
+        public BaseSongController(IBaseSongService baseSongService)
+        {
+            BaseSongService = baseSongService;
+        }
 
         [HttpGet]
         public IHttpActionResult GetBaseSongInfoById(int id)

@@ -51,7 +51,7 @@ namespace DalMsSql.Repositories
             {
                 song.Singer.SingerId = Connection
                 .Query<int>(@"INSERT INTO Singer(SingerName) 
-                               VALUES " + song.Singer.SingerName+  
+                               VALUES ('" + song.Singer.SingerName + "') " + 
                                "SELECT CAST(SCOPE_IDENTITY() as int)")
                 .SingleOrDefault();
             }
@@ -60,7 +60,7 @@ namespace DalMsSql.Repositories
             {
                 song.Genre.GenreId = Connection
                 .Query<int>(@"INSERT INTO Genre(GenreName) 
-                               VALUES (" + song.Genre.GenreName + ") " + 
+                               VALUES ('" + song.Genre.GenreName + "') " + 
                                "SELECT CAST(SCOPE_IDENTITY() as int)")
                 .SingleOrDefault();
             }
@@ -71,22 +71,22 @@ namespace DalMsSql.Repositories
                                "SELECT CAST(SCOPE_IDENTITY() as int)")
                 .SingleOrDefault();
 
-            if(song.Music != null)
+            if(song.Music != null && song.Music.Count != 0)
             foreach(var music in song.Music)
             {
                 Connection.Execute(@"INSERT INTO Music(MusicUrl, BaseSongId) VALUES ('" + music.MusicUrl + "'," + songId + ") " );
             }
 
-            if (song.Video != null)
+            if (song.Video != null && song.Video.Count != 0)
             foreach(var video in song.Video)
             {
-                Connection.Execute(@"INSERT INTO Video(VideoUrl) VALUES ('" + video.VideoUrl + "'," + songId + ") " );
+                Connection.Execute(@"INSERT INTO Video(VideoUrl, BaseSongId) VALUES ('" + video.VideoUrl + "'," + songId + ") ");
             }
 
-            if (song.Text != null)
+            if (song.Text != null && song.Text.Count != 0)
             foreach(var text in song.Text)
             {
-                Connection.Execute(@"INSERT INTO Text(TextContent) VALUES ('" + text.TextContent + "'," + songId+ ") " );
+                Connection.Execute(@"INSERT INTO Text(TextContent, BaseSongId) VALUES ('" + text.TextContent + "'," + songId + ") ");
             }
 
             return songId;

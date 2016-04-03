@@ -11,4 +11,14 @@ app.controller('baseSongController', ['$scope', 'baseSongService', function ($sc
         //alert(error.data.message);
     });
 
+    $scope.getRecentSongs = getRecentSongs;
+    $scope.getPopularSongs = getPopularSongs;
+
+    function getRecentSongs() {
+        alert("fdsad");
+    };
+
+    function getPopularSongs() {
+        alert("fdsafd");
+    };
 }]);

@@ -11,9 +11,13 @@ namespace Bl.Services
     public class BaseSongService : IBaseSongService
     {
         protected IBaseSongRepository BaseSongRepository;
+        protected IGenreRepository GenreRepository;
+        protected ISingerRepository SingerRepository;
 
-        public BaseSongService(IBaseSongRepository baseSongRepository)
+        public BaseSongService(IBaseSongRepository baseSongRepository, IGenreRepository genreRepository, ISingerRepository singerRepository)
         {
+            GenreRepository = genreRepository;
+            SingerRepository = singerRepository;
             BaseSongRepository = baseSongRepository;
         }
 
@@ -24,6 +28,9 @@ namespace Bl.Services
 
         public int? AddBaseSong(BlModels.BaseSong baseSong)
         {
+            baseSong.Genre.GenreId = GenreRepository.GetIdByGenreName(baseSong.Genre.GenreName);
+            baseSong.Singer.SingerId = SingerRepository.GetIdBySingerName(baseSong.Singer.SingerName);
+
             return BaseSongRepository.AddSong(Mapper.Map<BlModels.BaseSong, DalModels.BaseSong>(baseSong));
         }
     }

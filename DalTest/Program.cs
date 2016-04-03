@@ -19,7 +19,10 @@ namespace DalTest
             //var newSong = new BaseSong() { BaseSongName = "newName", Genre = new Genre() { GenreId = 1 }, Singer = new Singer() { SingerId = 1 } };
             //var songID = repository.AddSong(newSong);
 
-            var genres = repository.GetAllGenres();
+            var genre = "po";
+
+            var genres = repository.GetIdByGenreName(genre);
+
         }
     }
 }

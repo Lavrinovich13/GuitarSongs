@@ -5,15 +5,17 @@ app.factory('baseSongService', ['$http', 'ngAuthSettings', function ($http, ngAu
 
     var baseSongsServiceFactory = {};
 
-    var _getSongById = function (id) {
+    baseSongsServiceFactory.getSongById = _getSongById;
+    baseSongsServiceFactory.addBaseSong = _addBaseSong;
+
+    function _getSongById(id) {
 
         return $http.get(serviceBase + 'api/basesong' + '/' + id).then(function (results) {
             return results.data;
         });
     };
 
-    var _addBaseSong = function (baseSong) {
-
+    function _addBaseSong(baseSong) {
         return $http({
             method: "POST",
             url: serviceBase + 'api/basesong',
@@ -23,9 +25,6 @@ app.factory('baseSongService', ['$http', 'ngAuthSettings', function ($http, ngAu
             return result.error;
         });
     };
-
-    baseSongsServiceFactory.getSongById = _getSongById;
-    baseSongsServiceFactory.addBaseSong = _addBaseSong;
 
     return baseSongsServiceFactory;
 }]);

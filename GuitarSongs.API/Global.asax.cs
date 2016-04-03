@@ -19,7 +19,6 @@ namespace GuitarSongs.Api
             Bl.Configuration.MapperConfig.Config();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            SimpleInjectorInitializer.Initialize();
         }
     }
 }

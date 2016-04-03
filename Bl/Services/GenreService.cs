@@ -24,5 +24,10 @@ namespace Bl.Services
         {
             return Mapper.Map<IList<DalModels.Genre>, IList<BlModels.Genre>>(GenreRepository.GetAllGenres());
         }
+
+        public int? GetIdByGenreName(string name)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

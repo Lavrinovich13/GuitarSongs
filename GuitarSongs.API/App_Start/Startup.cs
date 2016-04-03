@@ -1,9 +1,11 @@
-﻿using GuitarSongs.API.Providers;
+﻿using GuitarSongs.API.App_Start;
+using GuitarSongs.API.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using SimpleInjector.Integration.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,8 +25,12 @@ namespace GuitarSongs.API
 
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            var container = SimpleInjectorWebApiInitializer.InitializeContainer();
 
+            HttpConfiguration config = new HttpConfiguration
+            {
+                DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container)
+            };
             ConfigureOAuth(app);
 
             WebApiConfig.Register(config);

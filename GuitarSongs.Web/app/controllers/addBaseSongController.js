@@ -2,69 +2,75 @@
 app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'genreService', 'singerService',
     function ($scope, $sce, baseSongService, genreService, singerService) {
 
-    $scope.baseSong = {
-        name: "",
-        genreName: "",
-        singerName: "",
-        videos: [],
-        texts: [],
-        musics: []
-    };
+        $scope.baseSong = {
+            baseSongName: "",
+            genre: {},
+            singer: {},
+            video: [],
+            text: [],
+            music: []
+        };
 
-    $scope.trustSrc = function (src) {
-        return $sce.trustAsResourceUrl(src);
-    }
+        $scope.genres = [];
+        $scope.singers = [];
 
-    $scope.addSong = function (newSong) {
-        alert(newSong.name);
-        //TODO errors
-        $scope.errors = baseSongService.addBaseSong(newSong);
-    }
-
-    $scope.genres = [];
-    
-    genreService.getAllGenres().then(function (results) {
-        console.log(results);
-        $scope.genres = results;
-    }, function (error) {
-        //alert(error.data.message);
-    });
-
-    $scope.singers = [];
-
-    singerService.getAllSingers().then(function (results) {
-        $scope.singers = results;
-    }, function (error) {
-        //alert(error.data.message);
-    });
-
-    $scope.isAddVideoHide = true;
-    $scope.isAddMusicHide = true;
-    $scope.isAddTextHide = true;
-
-    $scope.addNewVideo = function (videoUrl) {
-        $scope.baseSong.videos.push({ url: videoUrl });
-        videoUrl = "";
         $scope.isAddVideoHide = true;
-    }
-
-    $scope.addNewText = function (textName, text) {
-        console.log($(".jqte_editor").text());
-        $scope.baseSong.texts.push({ name: textName, content: $(".jqte_editor").text() });
-        $scope.isAddTextHide = true;
-    }
-
-    $scope.addNewMusic = function (musicName, url) {
-        $scope.baseSong.musics.push({ name: musicName, url: url });
         $scope.isAddMusicHide = true;
-    }
+        $scope.isAddTextHide = true;
 
-    $scope.editDocument = function(index)
-    {
-        var removedDocument = $scope.baseSong.texts.splice(index, 1)[0];
+        //initialization
+        genreService.getAllGenres().then(function (results) {
+            console.log(results);
+            $scope.genres = results;
+        }, function (error) {
+            //alert(error.data.message);
+        });
 
-        $scope.isAddTextHide = false;
-        $scope.text = { name: removedDocument.name, content: removedDocument.content}
+        singerService.getAllSingers().then(function (results) {
+            $scope.singers = results;
+        }, function (error) {
+            //alert(error.data.message);
+        });
+        //
 
-    }
+        $scope.trustSrc = function (src) {
+            return $sce.trustAsResourceUrl(src);
+        };
+
+        $scope.addSong = addSong;
+        $scope.addNewVideo = addNewVideo;
+        $scope.addNewText = addNewText;
+        $scope.addNewMusic = addNewMusic;
+        $scope.getDocument = getDocument;
+        $scope.getTextFromTextEditor = getTextFromTextEditor;
+        
+        function addSong(newSong) {
+            return baseSongService.addBaseSong(newSong);
+        };
+
+        function addNewVideo(videos, video) {
+            videos.push(video);
+        };
+
+        function addNewText(texts, text) {
+            texts.push(text);
+        };
+
+        function addNewMusic(musics, music) {
+            musics.push(music);
+        };
+
+        function getDocument(texts, index){
+            var document = texts.splice(index, 1)[0];
+            return { name: removedDocument.name, content: removedDocument.content}
+        };
+
+        function getTextFromTextEditor()
+        {
+            return $('.jqte_editor').text();
+        }
+
+        function setTextToTextEditor(text) {
+            $('.jqte_editor').text(text);
+        };
 }]);

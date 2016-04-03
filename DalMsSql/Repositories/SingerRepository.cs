@@ -25,5 +25,13 @@ namespace DalMsSql.Repositories
             var singers = Connection.Query<Singer>(@"SELECT SingerId, SingerName FROM Singer").ToList();
             return singers;
         }
+
+        public int? GetIdBySingerName(string singerName)
+        {
+            var id = Connection
+                .Query<int?>(string.Format(@"SELECT SingerId FROM Singer WHERE upper(SingerName)=upper('{0}')", singerName))
+                .SingleOrDefault();
+            return id;
+        }
     }
 }

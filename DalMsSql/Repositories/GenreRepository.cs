@@ -25,5 +25,13 @@ namespace DalMsSql.Repositories
             var genres = Connection.Query<Genre>(@"SELECT GenreId, GenreName FROM Genre").ToList();
             return genres;
         }
+
+        public int? GetIdByGenreName(string genreName)
+        {
+            var id = Connection
+                .Query<int?>(string.Format(@"SELECT GenreId FROM Genre WHERE upper(GenreName)=upper('{0}')", genreName))
+                .SingleOrDefault();
+            return id;
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace DalContracts.RepositoriesInterfaces
     public interface ISingerRepository
     {
         IList<Singer> GetAllSingers();
+        int? GetIdBySingerName(string singerName);
     }
 }
