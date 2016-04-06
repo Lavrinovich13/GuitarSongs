@@ -17,13 +17,13 @@ namespace GuitarSongs.API.Controllers
     {
         protected IGenreService GenreService;
 
-        public GenreController()
+        public GenreController(IGenreService genreService)
         {
-            GenreService = new GenreService(new GenreRepository(new SqlConnection(
-                        ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
+            GenreService = genreService;
         }
 
         [HttpGet]
+        [Route("genres")]
         public IHttpActionResult GetAllGenres()
         {
             return Ok(GenreService.GetAllGenres());

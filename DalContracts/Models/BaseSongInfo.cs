@@ -10,6 +10,7 @@ namespace DalContracts.Models
     {
         public int BaseSongId { get; set; }
         public string BaseSongName { get; set; }
+        public DateTime CreationDate { get; set; }
         public Singer Singer { get; set; }
         public Genre Genre { get; set; }
         public int LinkNum { get; set; }

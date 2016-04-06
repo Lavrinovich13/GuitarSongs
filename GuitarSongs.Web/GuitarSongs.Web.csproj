@@ -89,8 +89,12 @@
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\material.min.css" />
     <Content Include="content\images\addSong.jpg" />
+    <Content Include="content\images\guitar.jpg" />
+    <Content Include="scripts\angular-route.min.js" />
+    <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <Content Include="scripts\jquery-te-1.4.0.js" />
+    <Content Include="scripts\jquery.tinymce.min.js" />
     <Content Include="scripts\material.min.js" />
     <Content Include="content\css\site.css" />
     <Content Include="content\css\social-buttons.css" />
@@ -118,6 +122,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\tinymce.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

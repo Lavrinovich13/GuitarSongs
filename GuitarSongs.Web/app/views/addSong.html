@@ -82,7 +82,7 @@
                 <label>{{text.textName}}</label>
                 <button type="button"
                         class="mdl-button mdl-js-button mdl-button--icon"
-                        ng-click="getDocuemnt(baseSong.text, $index); isAddTextHide=!isAddTextHide">
+                        ng-click="editDocument(baseSong.text, $index); isAddTextHide=!isAddTextHide">
                     <i class="material-icons">edit</i>
                 </button>
                 <button type="button"  
@@ -168,7 +168,7 @@
 </div>
 
 <div class="modal-div" ng-hide="isAddTextHide">
-    <div class="mdl-card-wide-noImg mdl-card mdl-shadow--2dp modal-center-card" ng-hide="isAddTextHide">
+    <div class="mdl-card mdl-shadow--2dp modal-center-card" ng-hide="isAddTextHide">
         <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">New text</h2>
         </div>
@@ -183,19 +183,15 @@
                 </div>
             </div>
             <div class="mdl-card__supporting-text">
-                <div class="mdl-card-textfield">
-                    <input class="jqteTextArea mdl-textfield__input"
-                           ng-model="text.content"
-                           id="textEditor">
-                </div>
+                <textarea id="texteditor"></textarea>
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                   ng-disabled="textForm.$invalid">
+                        ng-disabled="textForm.$invalid">
                     Save
                 </button>
                 <button type="reset" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                   ng-click="isAddTextHide=!isAddTextHide">
+                        ng-click="isAddTextHide=!isAddTextHide">
                     Cancel
                 </button>
             </div>
@@ -204,5 +200,24 @@
 </div>
 
 <script>
-    $('.jqteTextArea').jqte();
+    tinymce.init({
+        selector: '#texteditor',
+        toolbar: "styleselect | bold italic | accords",
+        menubar: false,
+        setup: function (editor) {
+            editor.addButton('accords', {
+                type: 'listbox',
+                text: 'Accords',
+                icon: false,
+                onselect: function (e) {
+                    editor.insertContent(this.value());
+                },
+                values: [
+                  { text: 'Am', value: '&nbsp;<strong>Am</strong>' },
+                  { text: 'Dm', value: '&nbsp;<strong>Dm</strong>' },
+                  { text: 'C', value: '&nbsp;<strong>C</strong>' }
+                ]
+            });
+        }
+    });
 </script>

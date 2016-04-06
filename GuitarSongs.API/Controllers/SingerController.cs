@@ -17,13 +17,13 @@ namespace GuitarSongs.API.Controllers
     {
         protected ISingerService SingerService;
 
-        public SingerController()
+        public SingerController(ISingerService singerService)
         {
-            SingerService = new SingerService(new SingerRepository(new SqlConnection(
-                        ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
+            SingerService = singerService;
         }
 
         [HttpGet]
+        [Route("singers")]
         public IHttpActionResult GetAllSingers()
         {
             return Ok(SingerService.GetAllSingers());

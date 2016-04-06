@@ -82,10 +82,11 @@ html {
 }
 
 .baseSongInfoCard{
-    width: 24%;
+    width: 35%;
     background: rgba(34, 45, 119, 0.9);
-    margin-top: 3%;
+    margin-top: 1%;
     display:inline-block;
+    margin-right: 1%;
 }
 
 .baseSongInfoCard > .mdl-card__actions {
@@ -170,9 +171,8 @@ button:hover{
 
 .modal-div{
     background-color: rgba(0, 0, 0, 0.5);
-    height: 100%;
     left: 0;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 100%;
     z-index: 100; 
@@ -187,7 +187,7 @@ button:hover{
     width: 60%;
 }
 
-.jqteTextArea{
+/*.jqteTextArea{
     display:block;
 	margin:0 0 10px;
 	padding:6px;
@@ -196,6 +196,10 @@ button:hover{
 	border:#AAA 1px solid;
 	font-size:13px;
     min-height:100px;
+}*/
+
+.texteditor{
+    font-size: 15px;
 }
 
 .jqte_tool_label{
@@ -213,4 +217,22 @@ button:hover{
 
 #videoContainer > iframe{
     margin-bottom: 10px;
+}
+
+/*Full song info*/
+
+.backButton{
+    position: relative;
+    margin-left: -80%;
+    margin-top: 10px;
+}
+
+.mdl-card-full.mdl-card{
+    width:90%;
+}
+
+.mdl-card-full > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('../images/guitar.jpg') left;
 }

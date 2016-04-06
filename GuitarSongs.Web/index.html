@@ -23,23 +23,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-controller="indexController">
-        <header class="mdl-layout__header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--waterfall">
             <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title">GuitarSongs</span>
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
-                    <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
-                    <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
-                    <a class="mdl-layout__tab" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
-                </div>
-            </div>
-            <!-- Tabs -->
-          
-            <div class="mdl-layout__header-row" ng-controller="baseSongController">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
                     <label class="mdl-button mdl-js-button mdl-button--icon"
@@ -53,23 +39,40 @@
                 </div>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <button class="mdl-button mdl-js-button" ng-click="getRecentSongs()">Recent</button>
-                    <button class="mdl-button mdl-js-button" ng-click="getPopularSongs()">Popular</button>
+                    <button ng-controller="baseSongController" class="mdl-button mdl-js-button" ng-click="getRecentSongs()">
+                        Recent
+                    </button>
+                    <button class="mdl-button mdl-js-button" ng-click="">Popular</button>
                 </nav>
+            </div>
+            <div class="mdl-layout__header-row" ng-controller="indexController">
+                <!-- Title -->
+                <span class="mdl-layout-title">GuitarSongs</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
+                    <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
+                    <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
+                    <a class="mdl-layout__tab" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
+                </div>
             </div>
         </header>
         <main class="mdl-layout__content">
-                <div class="page-content" data-ng-view="" >
-                </div>
+            <div class="page-content" data-ng-view="">
+            </div>
         </main>
     </div>
 
     <!-- 3rd party libraries -->
-
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="scripts/loading-bar.min.js"></script>
+    <!--<script src="scripts/tinymce.min.js"></script>
+    <script src="scripts/jquery.tinymce.min.js"></script>-->
+
+    <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
 
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>

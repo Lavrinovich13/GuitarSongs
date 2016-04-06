@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DalContracts.Models
 {
@@ -6,6 +7,7 @@ namespace DalContracts.Models
     {
         public int? BaseSongId { get; set; }
         public string BaseSongName { get; set; }
+        public DateTime CreationDate { get; set; }
         public Singer Singer { get; set; }
         public Genre Genre { get; set; }
         public IList<Music> Music { get; set; }

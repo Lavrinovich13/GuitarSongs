@@ -1,24 +1,31 @@
 ﻿'use strict';
-app.controller('baseSongController', ['$scope', 'baseSongService', function ($scope, baseSongService) {
+app.controller('baseSongController', ['$scope','$location', '$sce', 'baseSongService', function ($scope, $location, $sce,baseSongService) {
 
-    $scope.baseSong = [];
+    $scope.songs = [];
+    $scope.currentSong = {};
+    $scope.isHideFullInfo = true;
 
-    baseSongService.getSongById(1).then(function (results) {
-        console.log(results);
-        $scope.baseSong = results;
+    $location.path("/baseSong");
+    getRecentSongs();
 
-    }, function (error) {
-        //alert(error.data.message);
-    });
-
+    $scope.$location = $location;
     $scope.getRecentSongs = getRecentSongs;
-    $scope.getPopularSongs = getPopularSongs;
-
-    function getRecentSongs() {
-        alert("fdsad");
+    $scope.getSongInfo = getSongInfo;
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
     };
 
-    function getPopularSongs() {
-        alert("fdsafd");
+    function getRecentSongs() {
+        $location.path("/baseSong");
+        baseSongService.getRecentSongs().then(function (result) {
+            $scope.songs = result;
+        });
+    };
+
+    function getSongInfo(id) {
+        $scope.isHideFullInfo = false;
+        baseSongService.getSongById(id).then(function (result) {
+            $scope.currentSong = result;
+        });
     };
 }]);

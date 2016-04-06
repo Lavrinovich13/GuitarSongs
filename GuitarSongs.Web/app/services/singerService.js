@@ -7,7 +7,7 @@ app.factory('singerService', ['$http', 'ngAuthSettings', function ($http, ngAuth
 
     var _getAllSingers = function (id) {
 
-        return $http.get(serviceBase + 'api/singer').then(function (results) {
+        return $http.get(serviceBase + '/singers').then(function (results) {
             return results.data;
         });
     };

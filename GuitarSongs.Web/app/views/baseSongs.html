@@ -1,43 +1,110 @@
-﻿<div class="child-container">
-    <div class="baseSongInfoCard shadow">
-        <div class="mdl-card__title mdl-card--expand" data-ng-model="baseSong">
-            <h4>
-                {{ baseSong.baseSongName }}
-                <br />
-                <span class="inline-text">
-                    {{ baseSong.singer.singerName }}
+﻿<div ng-controller="baseSongController" class="child-container">
+    <div ng-hide="!isHideFullInfo">
+        <div class="baseSongInfoCard shadow" ng-repeat="baseSong in songs">
+            <div class="mdl-card__title mdl-card--expand">
+                <h4>
+                    {{ baseSong.baseSongName }}
+                    <br />
+                    <span class="inline-text">
+                        {{ baseSong.singer.singerName }}
+                    </span>
+                    <br />
+                    <span class="inline-text">
+                        <i class="material-icons">mic</i>
+                        {{ baseSong.musicNum }}
+                    </span>
+                    <span class="inline-text">
+                        <i class="material-icons">movie</i>
+                        {{ baseSong.videoNum }}
+                    </span>
+                    <span class="inline-text">
+                        <i class="material-icons">menu</i>
+                        {{ baseSong.textNum }}
+                    </span>
+
+                </h4>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                        ng-click="getSongInfo(baseSong.baseSongId)">
+                    View full info
+                </button>
+                <div class="mdl-layout-spacer"></div>
+                <span>
+                    <i class="material-icons">favorite</i>
+                    {{ baseSong.linkNum }}
                 </span>
-                <br/>
-                <span class="inline-text">
-                    <i class="material-icons">mic</i>
-                    {{ baseSong.musicNum }}
-                </span>
-                <span class="inline-text">
-                    <i class="material-icons">movie</i>
-                    {{ baseSong.videoNum }}
-                </span>
-                <span class="inline-text">
-                    <i class="material-icons">menu</i>
-                    {{ baseSong.textNum }}
-                </span>
-                
-            </h4>
+            </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-js-button mdl-js-ripple-effect">
-                View full info
+
+        <div class="addBaseSongButton" ng-controller="indexController" data-ng-hide="authentication.isAuth">
+            <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" href="#/addSong">
+                <i class="material-icons">add</i>
             </a>
-            <div class="mdl-layout-spacer"></div>
-            <span>
-                <i class="material-icons">favorite</i>
-                {{ baseSong.linkNum }}
-            </span>
         </div>
     </div>
-
-    <div class="addBaseSongButton">
-        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" href="#/addSong">
-            <i class="material-icons">add</i>
-        </a>
+    <div ng-hide="isHideFullInfo">
+        <div class="backButton">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    ng-click="isHideFullInfo = !isHideFullInfo">
+                back
+            </button>
+        </div>
+        <div class="mdl-card-full mdl-card mdl-shadow--2dp center-card card-wide">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">
+                    {{currentSong.baseSongName}}
+                    <br />
+                    {{currentSong.singer.singerName}}
+                </h2>
+            </div>
+            <div ng-hide="baseSong.video.length == 0">
+                <div class="mdl-card__actions mdl-card--border videoArea">
+                    <span class="mdl-card__supporting-text">
+                        Video
+                    </span>
+                </div>
+                <div class="mdl-card__supporting-text">
+                    <div id="videoContainer">
+                        <div ng-repeat="video in currentSong.video">
+                            <iframe width="560"
+                                    height="560"
+                                    ng-src="{{trustSrc(video.videoUrl)}}"
+                                    frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="baseSong.music.length == 0">
+                <div class="mdl-card__actions mdl-card--border musicArea">
+                    <span class="mdl-card__supporting-text">
+                        Music
+                    </span>
+                </div>
+                <div class="mdl-card__supporting-text" ng-model="baseSong">
+                    <div ng-repeat="music in currentSong.music">
+                        <audio controls="controls" ng-src="{{trustSrc(music.musicUrl)}}"></audio>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="baseSong.text.length == 0">
+                <div class="mdl-card__actions mdl-card--border textArea">
+                    <span class="mdl-card__supporting-text">
+                        Text
+                    </span>
+                </div>
+                <div class="mdl-card__supporting-text" ng-model="baseSong">
+                    <div ng-repeat="text in baseSong.text">
+                        <p>{{text.textContent}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <button type="submit"
+                        class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    Add to favorite
+                </button>
+            </div>
+        </div>
     </div>
 </div>

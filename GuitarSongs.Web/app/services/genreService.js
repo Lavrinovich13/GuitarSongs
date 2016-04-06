@@ -7,7 +7,7 @@ app.factory('genreService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
 
     var _getAllGenres = function (id) {
 
-        return $http.get(serviceBase + 'api/genre').then(function (results) {
+        return $http.get(serviceBase + '/genres').then(function (results) {
             console.log(results);
             return results.data;
         });

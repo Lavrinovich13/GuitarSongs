@@ -12,16 +12,14 @@ namespace DalTest
         static void Main(string[] args)
         {
             var repository = 
-                new GenreRepository(
+                new BaseSongRepository(
                     new SqlConnection(
                         ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString()));
 
             //var newSong = new BaseSong() { BaseSongName = "newName", Genre = new Genre() { GenreId = 1 }, Singer = new Singer() { SingerId = 1 } };
             //var songID = repository.AddSong(newSong);
 
-            var genre = "po";
-
-            var genres = repository.GetIdByGenreName(genre);
+            var genres = repository.GetSongById(1);
 
         }
     }

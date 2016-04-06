@@ -27,7 +27,7 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/baseSongs.html"
     });
 
-    $routeProvider.otherwise({ redirectTo: "/baseSong" });
+    $routeProvider.otherwise({ redirectTo: "/login" });
 
 });
 

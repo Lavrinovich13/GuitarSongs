@@ -1,4 +1,5 @@
 ﻿using DalContracts.Models;
+using System.Collections.Generic;
 
 namespace DalContracts.RepositoriesInterfaces
 {
@@ -9,5 +10,6 @@ namespace DalContracts.RepositoriesInterfaces
         BaseSong GetSongById(int id);
 
         int? AddSong(BaseSong song);
+        IList<BaseSongInfo> GetRecentSongs();
     }
 }

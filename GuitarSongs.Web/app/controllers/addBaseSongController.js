@@ -41,7 +41,7 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         $scope.addNewVideo = addNewVideo;
         $scope.addNewText = addNewText;
         $scope.addNewMusic = addNewMusic;
-        $scope.getDocument = getDocument;
+        $scope.editDocument = getDocument;
         $scope.getTextFromTextEditor = getTextFromTextEditor;
         
         function addSong(newSong) {
@@ -53,6 +53,7 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         };
 
         function addNewText(texts, text) {
+            text.textContent = getTextFromTextEditor();
             texts.push(text);
         };
 
@@ -62,15 +63,17 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
 
         function getDocument(texts, index){
             var document = texts.splice(index, 1)[0];
-            return { name: removedDocument.name, content: removedDocument.content}
+            setTextToTextEditor(document.textContent);
+
+            return { textName: document.name }
         };
 
         function getTextFromTextEditor()
         {
-            return $('.jqte_editor').text();
+            return tinymce.get('texteditor').getContent();
         }
 
         function setTextToTextEditor(text) {
-            $('.jqte_editor').text(text);
+            tinymce.get('texteditor').setContent(text);
         };
 }]);
