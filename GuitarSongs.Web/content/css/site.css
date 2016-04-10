@@ -4,6 +4,10 @@ html {
     min-height: 100%;
 }
 
+.mdl-textfield.mdl-textfield--align-right.half-div{
+    width:50%;
+}
+
 #searchInput {
     width: 80%;
     padding: 12px 20px;
@@ -223,7 +227,7 @@ button:hover{
 
 .backButton{
     position: relative;
-    margin-left: -80%;
+    margin-left: -84%;
     margin-top: 10px;
 }
 
@@ -235,4 +239,12 @@ button:hover{
   color: #fff;
   height: 176px;
   background: url('../images/guitar.jpg') left;
+}
+
+.video-frame{
+    margin: 10px 10%;
+}
+
+.music-name{
+    margin: 10px 10%;
 }

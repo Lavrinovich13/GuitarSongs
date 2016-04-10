@@ -6,10 +6,9 @@ namespace DalContracts.RepositoriesInterfaces
     public interface IBaseSongRepository
     {
         BaseSongInfo GetSongInfoById(int id);
-
         BaseSong GetSongById(int id);
-
         int? AddSong(BaseSong song);
-        IList<BaseSongInfo> GetRecentSongs();
+        IList<BaseSongInfo> GetRecentSongs(int num);
+        IList<BaseSongInfo> SearchFor(string text);
     }
 }

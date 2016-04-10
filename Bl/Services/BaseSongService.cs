@@ -12,11 +12,15 @@ namespace Bl.Services
 {
     public class BaseSongService : IBaseSongService
     {
+        protected const int SONG_PORTION = 10;
+
         protected IBaseSongRepository BaseSongRepository;
         protected IGenreRepository GenreRepository;
         protected ISingerRepository SingerRepository;
 
-        public BaseSongService(IBaseSongRepository baseSongRepository, IGenreRepository genreRepository, ISingerRepository singerRepository)
+        public BaseSongService(IBaseSongRepository baseSongRepository,
+            IGenreRepository genreRepository,
+            ISingerRepository singerRepository)
         {
             GenreRepository = genreRepository;
             SingerRepository = singerRepository;
@@ -40,13 +44,20 @@ namespace Bl.Services
         public IList<BlModels.BaseSongInfo> GetRecentSongs()
         {
             return Mapper.Map<IList<DalModels.BaseSongInfo>, IList<BlModels.BaseSongInfo>>
-                (BaseSongRepository.GetRecentSongs());
+                (BaseSongRepository.GetRecentSongs(SONG_PORTION));
         }
 
 
         public BlModels.BaseSong GetSongById(int id)
         {
             return Mapper.Map<DalModels.BaseSong, BlModels.BaseSong>(BaseSongRepository.GetSongById(id));
+        }
+
+
+        public IList<BlModels.BaseSongInfo> SearchFor(string text)
+        {
+            return Mapper.Map<IList<DalModels.BaseSongInfo>, IList<BlModels.BaseSongInfo>>
+                (BaseSongRepository.SearchFor(text));
         }
     }
 }

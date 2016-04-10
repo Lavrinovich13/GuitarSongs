@@ -62,12 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controllers\addBaseSongController.js" />
-    <Content Include="app\controllers\baseSongController.js" />
+    <Content Include="app\controllers\delete_baseSongController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\ordersController.js" />
+    <Content Include="app\controllers\recentSongsController.js" />
+    <Content Include="app\controllers\searchBaseSongController.js" />
     <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\controllers\songInfoViewController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
@@ -77,6 +80,7 @@
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\addSong.html" />
     <Content Include="app\views\baseSongs.html" />
+    <Content Include="app\views\fullInfoSong.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\orders.html" />

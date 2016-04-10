@@ -9,11 +9,11 @@ namespace BlTest
         {
             Bl.Configuration.MapperConfig.Config();
 
-            var service = new Bl.Services.SingerService(new DalMsSql.Repositories.SingerRepository(
-                new SqlConnection(
-                        ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
+           // var service = new Bl.Services.BaseSongService(new DalMsSql.Repositories.BaseSongRepository(
+           //     new SqlConnection(
+           //             ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString())));
 
-            var song = service.GetAllSingers();
+           //// var song = service.();
         }
     }
 }

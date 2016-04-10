@@ -23,6 +23,7 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("basesong/recentsongs")]
         public IHttpActionResult GetRecentSongs()
         {
@@ -31,6 +32,7 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("basesong/addnewsong")]
         public IHttpActionResult AddBaseSong(BaseSong baseSong)
         {
@@ -44,6 +46,7 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("basesong/songfullinfo/{id}")]
         public IHttpActionResult GetBaseSongById(int id)
         {
@@ -54,6 +57,15 @@ namespace AngularJSAuthentication.API.Controllers
                 return BadRequest("Song was not found");
             }
             return Ok(song);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("basesong/search/{text}")]
+        public IHttpActionResult BaseSongsSearch(string text)
+        {
+            var songs = BaseSongService.SearchFor(text);
+            return Ok(songs);
         }
     }
 }

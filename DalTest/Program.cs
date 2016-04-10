@@ -19,7 +19,8 @@ namespace DalTest
             //var newSong = new BaseSong() { BaseSongName = "newName", Genre = new Genre() { GenreId = 1 }, Singer = new Singer() { SingerId = 1 } };
             //var songID = repository.AddSong(newSong);
 
-            var genres = repository.GetSongById(1);
+
+            var genres = repository.SearchFor("молчи");
 
         }
     }

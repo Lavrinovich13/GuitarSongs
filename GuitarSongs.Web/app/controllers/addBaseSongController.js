@@ -18,6 +18,8 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         $scope.isAddMusicHide = true;
         $scope.isAddTextHide = true;
 
+        $scope.clearEditor = function () { setTextToTextEditor(""); }
+
         //initialization
         genreService.getAllGenres().then(function (results) {
             console.log(results);
@@ -41,7 +43,7 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         $scope.addNewVideo = addNewVideo;
         $scope.addNewText = addNewText;
         $scope.addNewMusic = addNewMusic;
-        $scope.editDocument = getDocument;
+        $scope.editDocument = editDocument;
         $scope.getTextFromTextEditor = getTextFromTextEditor;
         
         function addSong(newSong) {
@@ -61,11 +63,11 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
             musics.push(music);
         };
 
-        function getDocument(texts, index){
-            var document = texts.splice(index, 1)[0];
-            setTextToTextEditor(document.textContent);
+        function editDocument(texts, index) {
+            //var document = texts.splice(index, 1)[0];
+            //setTextToTextEditor(document.textContent);
 
-            return { textName: document.name }
+            //$scope.text = { textName: document.name };
         };
 
         function getTextFromTextEditor()
@@ -74,6 +76,30 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         }
 
         function setTextToTextEditor(text) {
-            tinymce.get('texteditor').setContent(text);
+            $('#texteditor').html(text);
+            initTinymce();
+        };
+
+        function initTinymce() {
+            tinymce.init({
+                selector: '#texteditor',
+                toolbar: "styleselect | bold italic | accords",
+                menubar: false,
+                setup: function (editor) {
+                    editor.addButton('accords', {
+                        type: 'listbox',
+                        text: 'Accords',
+                        icon: false,
+                        onselect: function (e) {
+                            editor.insertContent(this.value());
+                        },
+                        values: [
+                          { text: 'Am', value: '&nbsp;<strong>Am</strong>' },
+                          { text: 'Dm', value: '&nbsp;<strong>Dm</strong>' },
+                          { text: 'C', value: '&nbsp;<strong>C</strong>' }
+                        ]
+                    });
+                }
+            });
         };
 }]);

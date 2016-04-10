@@ -64,19 +64,19 @@ namespace DalMsSql.Repositories
                 return baseSong;
 
             var text = Connection.Query<Text>
-                (string.Format(@"SELECT TextId, TextContent
+                (string.Format(@"SELECT TextId, TextContent, TextName
                                 FROM Text
                                 WHERE BaseSongId={0}", id))
                     .ToList();
 
             var video = Connection.Query<Video>
-                (string.Format(@"SELECT VideoId, VideoUrl
+                (string.Format(@"SELECT VideoId, VideoUrl, VideoName
                                 FROM Video
                                 WHERE BaseSongId={0}", id))
                     .ToList();
 
             var music = Connection.Query<Music>
-                (string.Format(@"SELECT MusicId, MusicUrl
+                (string.Format(@"SELECT MusicId, MusicUrl, MusicName
                                 FROM Music
                                 WHERE BaseSongId={0}", id))
                     .ToList();
@@ -120,19 +120,19 @@ namespace DalMsSql.Repositories
                 if (song.Music != null && song.Music.Count != 0)
                     foreach (var music in song.Music)
                     {
-                        Connection.Execute(@"INSERT INTO Music(MusicUrl, BaseSongId) VALUES ('" + music.MusicUrl + "'," + songId + ") ");
+                        Connection.Execute(@"INSERT INTO Music(MusicUrl, BaseSongId, MusicName) VALUES ('" + music.MusicUrl + "'," + songId + ",'" + music.MusicName + "')");
                     }
 
                 if (song.Video != null && song.Video.Count != 0)
                     foreach (var video in song.Video)
                     {
-                        Connection.Execute(@"INSERT INTO Video(VideoUrl, BaseSongId) VALUES ('" + video.VideoUrl + "'," + songId + ") ");
+                        Connection.Execute(@"INSERT INTO Video(VideoUrl, BaseSongId, VideoName) VALUES ('" + video.VideoUrl + "'," + songId + ",'" + video.VideoName + "')");
                     }
 
                 if (song.Text != null && song.Text.Count != 0)
                     foreach (var text in song.Text)
                     {
-                        Connection.Execute(@"INSERT INTO Text(TextContent, BaseSongId) VALUES ('" + text.TextContent + "'," + songId + ") ");
+                        Connection.Execute(@"INSERT INTO Text(TextContent, BaseSongId, TextName) VALUES ('" + text.TextContent + "'," + songId + ",'" + text.TextName + "')");
                     }
 
                 transaction.Complete();
@@ -141,11 +141,11 @@ namespace DalMsSql.Repositories
             return songId;
         }
 
-        public IList<BaseSongInfo> GetRecentSongs()
+        public IList<BaseSongInfo> GetRecentSongs(int num)
         {
             var ids =  Connection
                 .Query<int>
-                (@"SELECT TOP 10 BaseSongId FROM BaseSong ORDER BY CreationDate").ToList();
+                (@"SELECT TOP " + num +" BaseSongId FROM BaseSong ORDER BY CreationDate").ToList();
 
             return ids.Select(x => GetSongInfoById(x)).ToList();
         }
@@ -161,6 +161,14 @@ namespace DalMsSql.Repositories
 
 
             return ids.Select(x => GetSongInfoById(x)).ToList();
+        }
+
+        public IList<BaseSongInfo> SearchFor(string text)
+        {
+            var songsIds = Connection.Query<int>(@"SELECT BaseSongId FROM BaseSongView
+                        WHERE freetext(*,'" + text + "')").ToList();
+
+            return songsIds.Select(x => GetSongInfoById(x)).ToList();
         }
     }
 }

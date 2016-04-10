@@ -12,5 +12,7 @@ namespace BlContracts.ServicesInterfaces
         IList<BaseSongInfo> GetRecentSongs();
 
         BaseSong GetSongById(int id);
+
+        IList<BaseSongInfo> SearchFor(string text);
     }
 }

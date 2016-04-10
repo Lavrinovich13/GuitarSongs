@@ -2,11 +2,6 @@
 
 app.config(function ($routeProvider) {
 
-    //$routeProvider.when("/home", {
-    //    controller: "homeController",
-    //    templateUrl: "app/views/home.html"
-    //});
-
     $routeProvider.when("/login", {
         controller: "loginController",
         templateUrl: "/app/views/login.html"
@@ -22,12 +17,22 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/addSong.html"
     });
 
-    $routeProvider.when("/baseSong", {
-        controller: "baseSongController",
+    $routeProvider.when("/search/:searchText", {
+        controller: "searchBaseSongController",
         templateUrl: "/app/views/baseSongs.html"
     });
 
-    $routeProvider.otherwise({ redirectTo: "/login" });
+    $routeProvider.when("/recentSongs", {
+        controller: "recentSongsController",
+        templateUrl: "/app/views/baseSongs.html"
+    });
+
+    $routeProvider.when("/songInfo/:baseSongId", {
+        controller: "songInfoViewController",
+        templateUrl: "/app/views/fullInfoSong.html"
+    });
+
+    $routeProvider.otherwise({ redirectTo: "/recentSongs" });
 
 });
 
@@ -37,12 +42,12 @@ app.constant('ngAuthSettings', {
     clientId: 'ngAuthApp'
 });
 
-//app.config(function ($httpProvider) {
-//    $httpProvider.interceptors.push('authInterceptorService');
-//});
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+});
 
-//app.run(['authService', function (authService) {
-//    //authService.fillAuthData();
-//}]);
+app.run(['authService', function (authService) {
+    authService.fillAuthData();
+}]);
 
 

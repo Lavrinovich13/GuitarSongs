@@ -26,32 +26,27 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header mdl-layout__header--waterfall">
             <div class="mdl-layout__header-row">
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                    <label class="mdl-button mdl-js-button mdl-button--icon"
-                           for="waterfall-exp">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" name="sample"
-                               id="waterfall-exp">
+                <div class="mdl-textfield mdl-textfield--align-right half-div">
+                    <div class="mdl-textfield">
+                        <a class="mdl-button mdl-js-button" ng-href="#/search/{{searchtext}}">
+                            <i class="material-icons">search</i>
+                        </a>
+                        <input class="mdl-textfield__input" type="text" name="sample" ng-model="searchtext">
                     </div>
                 </div>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <button ng-controller="baseSongController" class="mdl-button mdl-js-button" ng-click="getRecentSongs()">
-                        Recent
-                    </button>
-                    <button class="mdl-button mdl-js-button" ng-click="">Popular</button>
+                    <a class="mdl-layout__tab" href="#/recentSongs">Recent</a>
+                    <a class="mdl-layout__tab">Popular</a>
                 </nav>
             </div>
-            <div class="mdl-layout__header-row" ng-controller="indexController">
+            <div ng-controller="indexController" class="mdl-layout__header-row">
                 <!-- Title -->
                 <span class="mdl-layout-title">GuitarSongs</span>
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
-                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">Welcome {{authentication.userName}}</a>
+                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">My songs</a>
                     <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
                     <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
                     <a class="mdl-layout__tab" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
@@ -90,8 +85,10 @@
     <script src="app/controllers/loginController.js?v=2"></script>
     <script src="app/controllers/signupController.js?v=2"></script>
     <script src="app/controllers/tokensManagerController.js?v=2"></script>
-    <script src="app/controllers/baseSongController.js"></script>
+    <script src="app/controllers/recentSongsController.js"></script>
+    <script src="app/controllers/songInfoViewController.js"></script>
     <script src="app/controllers/addBaseSongController.js"></script>
+    <script src="app/controllers/searchBaseSongController.js"></script>
     <!-- Load custom filters -->
     <!-- Load custom directives -->
 </body>
