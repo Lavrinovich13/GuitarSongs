@@ -15,6 +15,7 @@ namespace Bl.Configuration
             Mapper.Register<DalModels.Video, BlModels.Video>();
             Mapper.Register<DalModels.Text, BlModels.Text>();
             Mapper.Register<DalModels.BaseSong, BlModels.BaseSong>();
+            Mapper.Register<DalModels.UserSongInfo, BlModels.UserSongInfo>();
 
             Mapper.Register<BlModels.BaseSongInfo, DalModels.BaseSongInfo>();
             Mapper.Register<BlModels.Genre, DalModels.Genre>();
@@ -23,6 +24,7 @@ namespace Bl.Configuration
             Mapper.Register<BlModels.Video, DalModels.Video>();
             Mapper.Register<BlModels.Text, DalModels.Text>();
             Mapper.Register<BlModels.BaseSong, DalModels.BaseSong>();
+            Mapper.Register<BlModels.UserSongInfo, DalModels.UserSongInfo>();
         }
     }
 }

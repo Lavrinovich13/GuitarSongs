@@ -2,6 +2,7 @@
 using BlContracts.Models;
 using BlContracts.ServicesInterfaces;
 using DalMsSql.Repositories;
+using GuitarSongs.API;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace AngularJSAuthentication.API.Controllers
@@ -27,8 +29,16 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("basesong/recentsongs")]
         public IHttpActionResult GetRecentSongs()
         {
-            var songs = BaseSongService.GetRecentSongs();
-            return Ok(songs);
+            var result = BaseSongService.GetRecentSongs();
+            if(result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
+            
         }
 
         [HttpPost]
@@ -36,13 +46,17 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("basesong/addnewsong")]
         public IHttpActionResult AddBaseSong(BaseSong baseSong)
         {
-            var id = BaseSongService.AddBaseSong(baseSong);
+            var userId = new AuthRepository().GetUserIdByName(HttpContext.Current.User.Identity.Name);
+            var result = BaseSongService.AddBaseSong(userId, baseSong);
 
-            if(id == null)
+            if (result.Success)
             {
-                return BadRequest("Song can not be added");
+                return Ok(result.Data);
             }
-            return Ok(id);
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
         }
 
         [HttpGet]
@@ -50,13 +64,16 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("basesong/songfullinfo/{id}")]
         public IHttpActionResult GetBaseSongById(int id)
         {
-            var song = BaseSongService.GetSongById(id);
+            var result = BaseSongService.GetSongById(id);
 
-            if (song == null)
+            if (result.Success)
             {
-                return BadRequest("Song was not found");
+                return Ok(result.Data);
             }
-            return Ok(song);
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
         }
 
         [HttpGet]
@@ -64,8 +81,34 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("basesong/search/{text}")]
         public IHttpActionResult BaseSongsSearch(string text)
         {
-            var songs = BaseSongService.SearchFor(text);
-            return Ok(songs);
+            var result = BaseSongService.SearchFor(text);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("basesong/addtofavourite/{basesongid}")]
+        public IHttpActionResult AddBaseSongToFavourite(int baseSongId)
+        {
+            var userId = new AuthRepository().GetUserIdByName(HttpContext.Current.User.Identity.Name);
+
+            var result = BaseSongService.AddBaseSongToFavorite(userId, baseSongId);
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
         }
     }
 }

@@ -7,21 +7,33 @@ using DalModels = DalContracts.Models;
 using BlModels = BlContracts.Models;
 
 using ExpressMapper;
+using BusinesContract.UnitOfWorkInterface;
+using Business.Services;
+using System;
+using BusinesContract.ServicesInterfaces;
 
 namespace Bl.Services
 {
     public class SingerService : ISingerService
     {
-        protected ISingerRepository SingerRepository;
+        protected IUnitOfWork UnitOfWork;
 
-        public SingerService(ISingerRepository singerRepository)
+        public SingerService(IUnitOfWork unitOfWork)
         {
-            SingerRepository = singerRepository;
+            UnitOfWork = unitOfWork;
         }
 
-        public IList<BlContracts.Models.Singer> GetAllSingers()
+        public IServiceResult GetAllSingers()
         {
-            return Mapper.Map<IList<DalModels.Singer>, IList<BlModels.Singer>>(SingerRepository.GetAllSingers());
+            try
+            {
+                var singers = Mapper.Map<IList<DalModels.Singer>, IList<BlModels.Singer>>(UnitOfWork.SingerRepository.GetAllSingers());
+                return new Result { Success = true, Data = singers };
+            }
+            catch (Exception ex)
+            {
+                return new Result { Success = false, Errors = new[] { "There is problems in genres service" } };
+            }
         }
     }
 }

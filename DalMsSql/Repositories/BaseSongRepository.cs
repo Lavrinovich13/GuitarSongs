@@ -5,18 +5,16 @@ using System.Linq;
 using DalContracts.RepositoriesInterfaces;
 using System.Collections.Generic;
 using System.Transactions;
+using System.Data;
 
 namespace DalMsSql.Repositories
 {
     public class BaseSongRepository 
-        : IBaseSongRepository
+        : BaseRepository, IBaseSongRepository
     {
-        protected DbConnection Connection;
-
-        public BaseSongRepository(DbConnection connection)
-        {
-            Connection = connection;
-        }
+        public BaseSongRepository(IDbTransaction transaction)
+            : base(transaction)
+        { }
 
         public BaseSongInfo GetSongInfoById(int id)
         {
@@ -38,7 +36,7 @@ namespace DalMsSql.Repositories
                         song.Genre = genre;
                         song.Singer = singer;
                         return song;
-                    }, splitOn: "SingerId, GenreId")
+                    }, splitOn: "SingerId, GenreId", transaction: Transaction)
                     .SingleOrDefault();
         }
 
@@ -57,33 +55,8 @@ namespace DalMsSql.Repositories
                         song.Genre = genre;
                         song.Singer = singer;
                         return song;
-                    }, splitOn: "SingerId, GenreId")
+                    }, splitOn: "SingerId, GenreId", transaction: Transaction)
                     .SingleOrDefault();
-
-            if (baseSong == null)
-                return baseSong;
-
-            var text = Connection.Query<Text>
-                (string.Format(@"SELECT TextId, TextContent, TextName
-                                FROM Text
-                                WHERE BaseSongId={0}", id))
-                    .ToList();
-
-            var video = Connection.Query<Video>
-                (string.Format(@"SELECT VideoId, VideoUrl, VideoName
-                                FROM Video
-                                WHERE BaseSongId={0}", id))
-                    .ToList();
-
-            var music = Connection.Query<Music>
-                (string.Format(@"SELECT MusicId, MusicUrl, MusicName
-                                FROM Music
-                                WHERE BaseSongId={0}", id))
-                    .ToList();
-
-            baseSong.Text = text;
-            baseSong.Video = video;
-            baseSong.Music = music;
 
             return baseSong;
         }
@@ -91,52 +64,12 @@ namespace DalMsSql.Repositories
         public int? AddSong(BaseSong song)
         {
             int? songId = null;
-            using (var transaction = new TransactionScope())
-            {
-                if (song.Singer.SingerId == null)
-                {
-                    song.Singer.SingerId = Connection
-                    .Query<int>(@"INSERT INTO Singer(SingerName) 
-                               VALUES ('" + song.Singer.SingerName + "') " +
-                                   "SELECT CAST(SCOPE_IDENTITY() as int)")
-                    .SingleOrDefault();
-                }
 
-                if (song.Genre.GenreId == null)
-                {
-                    song.Genre.GenreId = Connection
-                    .Query<int>(@"INSERT INTO Genre(GenreName) 
-                               VALUES ('" + song.Genre.GenreName + "') " +
-                                   "SELECT CAST(SCOPE_IDENTITY() as int)")
-                    .SingleOrDefault();
-                }
-
-                    songId = Connection
-                    .Query<int>(@"INSERT INTO BaseSong(BaseSongName, GenreId, SingerId, CreationDate) 
-                               VALUES ('" + song.BaseSongName + "'," + song.Genre.GenreId + "," + song.Singer.SingerId + ",'" + song.CreationDate.ToString("yyyy-MM-dd HH:mm:ss") + "') " +
-                                   "SELECT CAST(SCOPE_IDENTITY() as int)")
-                    .SingleOrDefault();
-
-                if (song.Music != null && song.Music.Count != 0)
-                    foreach (var music in song.Music)
-                    {
-                        Connection.Execute(@"INSERT INTO Music(MusicUrl, BaseSongId, MusicName) VALUES ('" + music.MusicUrl + "'," + songId + ",'" + music.MusicName + "')");
-                    }
-
-                if (song.Video != null && song.Video.Count != 0)
-                    foreach (var video in song.Video)
-                    {
-                        Connection.Execute(@"INSERT INTO Video(VideoUrl, BaseSongId, VideoName) VALUES ('" + video.VideoUrl + "'," + songId + ",'" + video.VideoName + "')");
-                    }
-
-                if (song.Text != null && song.Text.Count != 0)
-                    foreach (var text in song.Text)
-                    {
-                        Connection.Execute(@"INSERT INTO Text(TextContent, BaseSongId, TextName) VALUES ('" + text.TextContent + "'," + songId + ",'" + text.TextName + "')");
-                    }
-
-                transaction.Complete();
-            }
+            songId = Connection
+            .Query<int>(@"INSERT INTO BaseSong(BaseSongName, GenreId, SingerId, CreationDate) 
+                        VALUES ('" + song.BaseSongName + "'," + song.Genre.GenreId + "," + song.Singer.SingerId + ",'" + song.CreationDate.ToString() + "') " +
+                            "SELECT CAST(SCOPE_IDENTITY() as int)", transaction: Transaction)
+            .SingleOrDefault();
 
             return songId;
         }
@@ -145,30 +78,49 @@ namespace DalMsSql.Repositories
         {
             var ids =  Connection
                 .Query<int>
-                (@"SELECT TOP " + num +" BaseSongId FROM BaseSong ORDER BY CreationDate").ToList();
+                (@"SELECT TOP " + num + " BaseSongId FROM BaseSong ORDER BY CreationDate", transaction: Transaction).ToList();
 
             return ids.Select(x => GetSongInfoById(x)).ToList();
         }
 
-        public IList<BaseSongInfo> GetPopularSongs()
-        {
-            //check
-            var ids = Connection
-                .Query<int>
-                (@"SELECT TOP 10 BaseSongId FROM 
-                    (SELECT BaseSongId, COUNT(UserSongId) AS LinksCount
-                     FROM UserSong GROUP BY BaseSongId) ORDER BY LinksCount").ToList();
+//        public IList<BaseSongInfo> GetPopularSongs()
+//        {
+//            //check
+//            var ids = Connection
+//                .Query<int>
+//                (@"SELECT TOP 10 BaseSongId FROM 
+//                    (SELECT BaseSongId, COUNT(UserSongId) AS LinksCount
+//                     FROM UserSong GROUP BY BaseSongId) ORDER BY LinksCount").ToList();
 
 
-            return ids.Select(x => GetSongInfoById(x)).ToList();
-        }
+//            return ids.Select(x => GetSongInfoById(x)).ToList();
+//        }
 
         public IList<BaseSongInfo> SearchFor(string text)
         {
             var songsIds = Connection.Query<int>(@"SELECT BaseSongId FROM BaseSongView
-                        WHERE freetext(*,'" + text + "')").ToList();
+                        WHERE freetext(*,'" + text + "')", transaction: Transaction).ToList();
 
             return songsIds.Select(x => GetSongInfoById(x)).ToList();
+        }
+
+        public int AddBaseSongToFavorite(string userId, int baseSongId)
+        {
+            var newSongId = Connection.Query<int>(@"INSERT INTO UserSong(BaseSongId, UserId) 
+                               VALUES (" + baseSongId + ",'" + userId + "') SELECT CAST(SCOPE_IDENTITY() as int)", transaction: Transaction)
+                    .SingleOrDefault();
+
+            return newSongId;
+        }
+
+
+        public bool IsUserHasSong(string userId, int baseSongId)
+        {
+            var songId = Connection
+                .Query<int>(string.Format(@"SELECT UserSongId FROM UserSong WHERE UserId='{0}' AND BaseSongId={1}", userId, baseSongId),
+                transaction: Transaction).SingleOrDefault();
+
+            return songId == null;
         }
     }
 }

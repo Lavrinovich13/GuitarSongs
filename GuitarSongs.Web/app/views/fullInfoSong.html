@@ -1,60 +1,58 @@
-﻿<div class="child-container">
-    <div class="mdl-card-full mdl-card mdl-shadow--2dp center-card card-wide">
-        <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">
-                {{currentSong.baseSongName}}
-                <br />
-                {{currentSong.singer.singerName}}
-            </h2>
+﻿<div class="mdl-card-full mdl-card mdl-shadow--2dp center-card">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">
+            {{currentSong.baseSongName}}
+            <br />
+            {{currentSong.singer.singerName}}
+        </h2>
+    </div>
+    <div ng-hide="currentSong.video.length == 0">
+        <div class="mdl-card__actions mdl-card--border videoArea">
+            <span class="section-text">
+                Video
+            </span>
         </div>
-        <div ng-hide="currentSong.video.length == 0">
-            <div class="mdl-card__actions mdl-card--border videoArea">
-                <span class="mdl-card__supporting-text">
-                    Video
-                </span>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <div id="videoContainer">
-                    <div ng-repeat="video in currentSong.video">
-                        <iframe class="video-frame" width="600"
-                                height="500"
-                                ng-src="{{trustSrc(video.videoUrl)}}"
-                                frameborder="0"></iframe>
-                    </div>
+        <div class="mdl-card__supporting-text">
+            <div id="videoContainer">
+                <div ng-repeat="video in currentSong.video">
+                    <iframe class="video-frame" width="600"
+                            height="500"
+                            ng-src="{{trustSrc(video.videoUrl)}}"
+                            frameborder="0"></iframe>
                 </div>
             </div>
         </div>
-        <div ng-hide="currentSong.music.length == 0">
-            <div class="mdl-card__actions mdl-card--border musicArea">
-                <span class="mdl-card__supporting-text">
-                    Music
-                </span>
-            </div>
-            <div class="mdl-card__supporting-text" ng-model="baseSong">
-                <div ng-repeat="music in currentSong.music">
-                    <span class="music-name">{{music.musicName}}</span>
-                    <audio controls="controls" ng-src="{{trustSrc(music.musicUrl)}}"></audio>
-                </div>
+    </div>
+    <div ng-hide="currentSong.music.length == 0">
+        <div class="mdl-card__actions mdl-card--border musicArea">
+            <span class="section-text">
+                Music
+            </span>
+        </div>
+        <div class="mdl-card__supporting-text" ng-model="baseSong">
+            <div ng-repeat="music in currentSong.music">
+                <span class="music-name">{{music.musicName}}</span>
+                <audio controls="controls" ng-src="{{trustSrc(music.musicUrl)}}"></audio>
             </div>
         </div>
-        <div ng-hide="currentSong.text.length == 0">
-            <div class="mdl-card__actions mdl-card--border textArea">
-                <span class="mdl-card__supporting-text">
-                    Text
-                </span>
-            </div>
-            <div class="mdl-card__supporting-text" ng-model="baseSong">
-                <div ng-repeat="text in currentSong.text">
-                    <h3>{{text.textName}}</h3>
-                    <p>{{text.textContent}}</p>
-                </div>
+    </div>
+    <div ng-hide="currentSong.text.length == 0">
+        <div class="mdl-card__actions mdl-card--border textArea">
+            <span class="section-text">
+                Text
+            </span>
+        </div>
+        <div class="mdl-card__supporting-text" ng-model="baseSong">
+            <div ng-repeat="text in currentSong.text">
+                <h3>{{text.textName}}</h3>
+                <div ng-bind-html="trustHtml(text.textContent)"></div>
             </div>
         </div>
-        <div class="mdl-card__actions mdl-card--border" ng-controller="indexController" data-ng-hide="!authentication.isAuth">
-            <button type="submit"
-                    class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Add to favorite
-            </button>
-        </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border" ng-controller="indexController" data-ng-hide="!authentication.isAuth">
+        <button type="submit"
+                class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="addToFavorite(currentSong.baseSongId)">
+            Add to favorite
+        </button>
     </div>
 </div>

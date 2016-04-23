@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
 using BlContracts.Models;
+using BusinesContract.ServicesInterfaces;
 
 namespace BlContracts.ServicesInterfaces
 {
     public interface IGenreService
     {
-        IList<Genre> GetAllGenres();
+        IServiceResult GetAllGenres();
     }
 }

@@ -55,10 +55,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\BaseSongRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
+    <Compile Include="Repositories\MusicRepository.cs" />
     <Compile Include="Repositories\SingerRepository.cs" />
+    <Compile Include="Repositories\TextRepository.cs" />
+    <Compile Include="Repositories\UserSongRepository.cs" />
+    <Compile Include="Repositories\VideoRepository.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

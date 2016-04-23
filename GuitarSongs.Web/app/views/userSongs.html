@@ -1,0 +1,25 @@
+﻿<div class="child-container">
+    <div class="baseSongInfoCard shadow" ng-repeat="song in songs">
+        <div class="mdl-card__title mdl-card--expand">
+            <h5>
+                {{ song.baseSong.baseSongName }}
+                <span class="inline-text">
+                    <br />
+                    {{ song.baseSong.singer.singerName }}
+                    <br />
+                    Status: {{ song.isReady?"learned":"learning" }}
+                </span>
+            </h5>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                View full info
+            </a>
+            <div class="mdl-layout-spacer"></div>
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+               href="#/learn/{{song.userSongId}}">
+                Learn
+            </a>
+        </div>
+    </div>
+</div>

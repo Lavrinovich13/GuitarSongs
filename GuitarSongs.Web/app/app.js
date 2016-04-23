@@ -27,9 +27,19 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/baseSongs.html"
     });
 
+    $routeProvider.when("/mySongs", {
+        controller: "userSongsController",
+        templateUrl: "/app/views/userSongs.html"
+    });
+
     $routeProvider.when("/songInfo/:baseSongId", {
         controller: "songInfoViewController",
         templateUrl: "/app/views/fullInfoSong.html"
+    });
+
+    $routeProvider.when("/learn/:userSongId", {
+        controller: "learnController",
+        templateUrl: "/app/views/learnSong.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/recentSongs" });

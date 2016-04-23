@@ -20,7 +20,7 @@ namespace DalTest
             //var songID = repository.AddSong(newSong);
 
 
-            var genres = repository.SearchFor("молчи");
+            var genres = repository.AddBaseSongToFavorite(" c643093e-e0cf-4fe8-9fc7-6b3f7424d671", 1);
 
         }
     }

@@ -26,7 +26,15 @@ namespace GuitarSongs.API.Controllers
         [Route("genres")]
         public IHttpActionResult GetAllGenres()
         {
-            return Ok(GenreService.GetAllGenres());
+            var result = GenreService.GetAllGenres();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
         }
     }
 }

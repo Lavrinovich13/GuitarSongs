@@ -1,0 +1,51 @@
+﻿<link href="content/css/jqx.base.css" rel="stylesheet" />
+<div id="DIV1" style="width: 100%; height: 100%;">
+    <div id='jqxWidget'>
+        <div id="mainSplitter">
+            <div class="splitter-panel">
+                <p ng-show="currentSong.video.length==0" class="mdl-typography--text-uppercase big-text">no video</p>
+                <div ng-hide="currentSong.video.length==0">
+                    <div ng-model="currentVideo">
+                        <iframe width="400"
+                                height="400"
+                                ng-src="{{trustSrc(currentVideo.videoUrl)}}"
+                                frameborder="0"></iframe>
+                    </div>
+                    <div>
+                        <div class="button-5m" ng-repeat="video in currentSong.video">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                    ng-click="changeVideo(video)">
+                                {{video.videoName}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="splitter-panel">
+                <p ng-show="currentSong.text.length==0" class="mdl-typography--text-uppercase big-text">no text</p>
+                <div ng-hide="currentSong.text.length==0">
+                    <div class="text-area" ng-model="currentText">
+                        <div class="mdl-typography--text" ng-bind-html="trustHtml(currentText.textContent)"></div>
+                    </div>
+                    <div>
+                        <div class="button-5m" ng-repeat="text in currentSong.text">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                    ng-click="changeText(text)">
+                                {{text.textName}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#mainSplitter').jqxSplitter({
+            width: '100%',
+            height: '640px',
+            orientation: 'vertical'
+        });
+    });
+</script>

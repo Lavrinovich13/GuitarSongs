@@ -6,7 +6,7 @@
     <title>MyGuitar</title>
 
     <!--Styles-->
-    <link href="content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/css/styless.css" rel="stylesheet" />
     <link href="content/css/site.css" rel="stylesheet" />
     <link href="content/css/loading-bar.css" rel="stylesheet" />
     <link rel="stylesheet" href="content/css/material.min.css">
@@ -23,7 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+   <!--  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header mdl-layout__header--waterfall">
             <div class="mdl-layout__header-row">
                 <div class="mdl-textfield mdl-textfield--align-right half-div">
@@ -36,60 +36,111 @@
                 </div>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <a class="mdl-layout__tab" href="#/recentSongs">Recent</a>
-                    <a class="mdl-layout__tab">Popular</a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#/recentSongs">Recent</a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Popular</a>
                 </nav>
             </div>
             <div ng-controller="indexController" class="mdl-layout__header-row">
-                <!-- Title -->
                 <span class="mdl-layout-title">GuitarSongs</span>
                 <div class="mdl-layout-spacer"></div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                    <a class="mdl-layout__tab" href="#" data-ng-hide="!authentication.isAuth">My songs</a>
-                    <a class="mdl-layout__tab" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
-                    <a class="mdl-layout__tab" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
-                    <a class="mdl-layout__tab" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
+                <div>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#/mySongs" data-ng-hide="!authentication.isAuth">My songs</a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
                 </div>
             </div>
         </header>
-        <main class="mdl-layout__content">
+    </div>-->
+
+    <div ng-controller="indexController" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class ="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                <span class="android-title mdl-layout-title">
+                    <label class="mdl-typography--text-uppercase">Guitar Songs</label>
+                </span>
+                <div class="android-header-spacer mdl-layout-spacer"></div>
+                <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search-field" ng-model="searchText" ng-enter="search(searchText)">
+                    </div>
+                </div>
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Singers</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/recentSongs">Recent</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Popular</a>
+                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#/mySongs" data-ng-hide="!authentication.isAuth">My songs</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="android-drawer mdl-layout__drawer">
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="" data-ng-click="logOut()" data-ng-hide="!authentication.isAuth">Logout</a>
+                <a class="mdl-navigation__link" href="#/login" data-ng-hide="authentication.isAuth">Login</a>
+                <a class="mdl-navigation__link" href="#/signup" data-ng-hide="authentication.isAuth">Sign Up</a>
+                <div class="android-drawer-separator"></div>
+                <a class="mdl-navigation__link" href="">Singers</a>
+                <a class="mdl-navigation__link" href="#/recentSongs">Recent</a>
+                <a class="mdl-navigation__link" href="">Popular</a>
+                <a class="mdl-navigation__link" href="#/mySongs" data-ng-hide="!authentication.isAuth">My songs</a>
+            </nav>
+        </div>
+
+        <main class="android-content mdl-layout__content main-section">
             <div class="page-content" data-ng-view="">
             </div>
         </main>
+
     </div>
 
-    <!-- 3rd party libraries -->
-    <script src="scripts/angular.min.js"></script>
-    <script src="scripts/angular-route.min.js"></script>
-    <script src="scripts/angular-local-storage.min.js"></script>
-    <script src="scripts/loading-bar.min.js"></script>
-    <!--<script src="scripts/tinymce.min.js"></script>
-    <script src="scripts/jquery.tinymce.min.js"></script>-->
+        <!-- 3rd party libraries -->
+        <script src="scripts/angular.min.js"></script>
+        <script src="scripts/angular-route.min.js"></script>
+        <script src="scripts/angular-local-storage.min.js"></script>
+        <script src="scripts/loading-bar.min.js"></script>
 
-    <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+        <script type="text/javascript" src="scripts/jqxcore.js"></script>
+        <script type="text/javascript" src="scripts/jqxsplitter.js"></script>
+        <script type="text/javascript" src="scripts/jqxbuttons.js"></script>
+        <script type="text/javascript" src="scripts/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="scripts/jqxpanel.js"></script>
+        <!--<script src="scripts/tinymce.min.js"></script>
+        <script src="scripts/jquery.tinymce.min.js"></script>-->
 
-    <!-- Load app main script -->
-    <script src="app/app.js?v=2"></script>
+        <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
 
-    <!-- Load services -->
-    <script src="app/services/authInterceptorService.js?v=2"></script>
-    <script src="app/services/authService.js?v=2"></script>
-    <script src="app/services/tokensManagerService.js?v=2"></script>
-    <script src="app/services/baseSongService.js"></script>
-    <script src="app/services/singerService.js"></script>
-    <script src="app/services/genreService.js"></script>
-    <!-- Load controllers -->
-    <script src="app/controllers/indexController.js?v=2"></script>
-    <script src="app/controllers/homeController.js?v=2"></script>
-    <script src="app/controllers/loginController.js?v=2"></script>
-    <script src="app/controllers/signupController.js?v=2"></script>
-    <script src="app/controllers/tokensManagerController.js?v=2"></script>
-    <script src="app/controllers/recentSongsController.js"></script>
-    <script src="app/controllers/songInfoViewController.js"></script>
-    <script src="app/controllers/addBaseSongController.js"></script>
-    <script src="app/controllers/searchBaseSongController.js"></script>
-    <!-- Load custom filters -->
-    <!-- Load custom directives -->
+        <!-- Load app main script -->
+        <script src="app/app.js?v=2"></script>
+
+        <!-- Load services -->
+        <script src="app/services/authInterceptorService.js?v=2"></script>
+        <script src="app/services/authService.js?v=2"></script>
+        <script src="app/services/tokensManagerService.js?v=2"></script>
+        <script src="app/services/baseSongService.js"></script>
+        <script src="app/services/singerService.js"></script>
+        <script src="app/services/genreService.js"></script>
+        <script src="app/services/userSongService.js"></script>
+        <!-- Load controllers -->
+        <script src="app/controllers/indexController.js?v=2"></script>
+        <script src="app/controllers/homeController.js?v=2"></script>
+        <script src="app/controllers/loginController.js?v=2"></script>
+        <script src="app/controllers/signupController.js?v=2"></script>
+        <script src="app/controllers/tokensManagerController.js?v=2"></script>
+        <script src="app/controllers/recentSongsController.js"></script>
+        <script src="app/controllers/songInfoViewController.js"></script>
+        <script src="app/controllers/addBaseSongController.js"></script>
+        <script src="app/controllers/searchBaseSongController.js"></script>
+        <script src="app/controllers/userSongsController.js"></script>
+        <script src="app/controllers/learnController.js"></script>
+        <!-- Load custom filters -->
+        <!-- Load custom directives -->
+        <script src="app/directives/enterPressDirective.js"></script>
 </body>
 </html>

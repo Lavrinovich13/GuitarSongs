@@ -11,5 +11,6 @@ namespace DalContracts.RepositoriesInterfaces
     {
         IList<Singer> GetAllSingers();
         int? GetIdBySingerName(string singerName);
+        int AddSinger(Singer singer);
     }
 }

@@ -58,7 +58,9 @@
     <Compile Include="Configuration\MapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GenreService.cs" />
+    <Compile Include="Services\Result.cs" />
     <Compile Include="Services\SingerService.cs" />
+    <Compile Include="Services\UserSongService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlContracts\BlContracts.csproj">

@@ -46,12 +46,20 @@
     <Compile Include="Models\Music.cs" />
     <Compile Include="Models\Singer.cs" />
     <Compile Include="Models\BaseSongInfo.cs" />
+    <Compile Include="Models\UserSong.cs" />
+    <Compile Include="Models\UserSongInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Text.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="RepositoriesInterfaces\IBaseSongRepository.cs" />
     <Compile Include="RepositoriesInterfaces\IGenreRepository.cs" />
+    <Compile Include="RepositoriesInterfaces\IMusicRepository.cs" />
+    <Compile Include="RepositoriesInterfaces\IRepository.cs" />
     <Compile Include="RepositoriesInterfaces\ISingerRepository.cs" />
+    <Compile Include="RepositoriesInterfaces\ITextRepository.cs" />
+    <Compile Include="RepositoriesInterfaces\IUserSongRepository.cs" />
+    <Compile Include="RepositoriesInterfaces\IVideoRepository.cs" />
+    <Compile Include="UnitOfWorkInterface\IUnitOfWork.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

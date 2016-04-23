@@ -24,6 +24,11 @@ namespace GuitarSongs.API
             _ctx = new AuthContext();
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
         }
+        public string GetUserIdByName(string userName)
+        {
+            var result = _userManager.FindByName(userName).Id;
+            return result;
+        }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {

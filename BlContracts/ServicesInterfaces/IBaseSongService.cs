@@ -1,18 +1,21 @@
 ﻿using BlContracts.Models;
+using BusinesContract.ServicesInterfaces;
 using System.Collections.Generic;
 
 namespace BlContracts.ServicesInterfaces
 {
     public interface IBaseSongService
     {
-        BaseSongInfo GetBaseSongInfoById(int id);
+        IServiceResult GetBaseSongInfoById(int id);
 
-        int? AddBaseSong(BaseSong baseSong);
+        IServiceResult AddBaseSong(string userId, BaseSong baseSong);
 
-        IList<BaseSongInfo> GetRecentSongs();
+        IServiceResult GetRecentSongs();
 
-        BaseSong GetSongById(int id);
+        IServiceResult GetSongById(int id);
 
-        IList<BaseSongInfo> SearchFor(string text);
+        IServiceResult SearchFor(string text);
+
+        IServiceResult AddBaseSongToFavorite(string userId, int baseSongId);
     }
 }

@@ -2,6 +2,9 @@
 app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'genreService', 'singerService',
     function ($scope, $sce, baseSongService, genreService, singerService) {
 
+        var uniqId = 1;
+        initTinymce();
+
         $scope.baseSong = {
             baseSongName: "",
             genre: {},
@@ -13,10 +16,6 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
 
         $scope.genres = [];
         $scope.singers = [];
-
-        $scope.isAddVideoHide = true;
-        $scope.isAddMusicHide = true;
-        $scope.isAddTextHide = true;
 
         $scope.clearEditor = function () { setTextToTextEditor(""); }
 
@@ -43,11 +42,23 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         $scope.addNewVideo = addNewVideo;
         $scope.addNewText = addNewText;
         $scope.addNewMusic = addNewMusic;
-        $scope.editDocument = editDocument;
+        $scope.editText = editText;
         $scope.getTextFromTextEditor = getTextFromTextEditor;
+        $scope.showDialog = showDialog;
+        $scope.closeDialog = closeDialog;
         
+        function showDialog(selector) {
+            $(selector).show();
+        };
+
+        function closeDialog(selector) {
+            $(selector).hide();
+        };
+
         function addSong(newSong) {
-            return baseSongService.addBaseSong(newSong);
+            baseSongService.addBaseSong(newSong).then(function () {
+                $location.path("/mySongs");
+            });
         };
 
         function addNewVideo(videos, video) {
@@ -56,18 +67,32 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
 
         function addNewText(texts, text) {
             text.textContent = getTextFromTextEditor();
-            texts.push(text);
+            if (text._id == undefined) {
+                text._id = uniqId++;
+                text.isExists == true;
+                texts.push(text);
+            }
+            else {
+                for (var i = 0; i < texts.length; i++) {
+                    if (texts[i]._id == text._id) {
+                        texts[i] = text;
+                    }
+                }
+            }
         };
+
+        function editText(texts, index) {
+            var text = texts[index];
+            $scope.text = {
+                _id: text._id,
+                textName: text.textName,
+                textContent: text.textContent
+            };
+            setTextToTextEditor(text.textContent);
+        }
 
         function addNewMusic(musics, music) {
             musics.push(music);
-        };
-
-        function editDocument(texts, index) {
-            //var document = texts.splice(index, 1)[0];
-            //setTextToTextEditor(document.textContent);
-
-            //$scope.text = { textName: document.name };
         };
 
         function getTextFromTextEditor()
@@ -76,30 +101,29 @@ app.controller('addBaseSongController', ['$scope', '$sce', 'baseSongService', 'g
         }
 
         function setTextToTextEditor(text) {
-            $('#texteditor').html(text);
-            initTinymce();
+            tinymce.activeEditor.setContent(text);
         };
 
         function initTinymce() {
             tinymce.init({
-                selector: '#texteditor',
-                toolbar: "styleselect | bold italic | accords",
-                menubar: false,
-                setup: function (editor) {
-                    editor.addButton('accords', {
-                        type: 'listbox',
-                        text: 'Accords',
-                        icon: false,
-                        onselect: function (e) {
-                            editor.insertContent(this.value());
-                        },
-                        values: [
-                          { text: 'Am', value: '&nbsp;<strong>Am</strong>' },
-                          { text: 'Dm', value: '&nbsp;<strong>Dm</strong>' },
-                          { text: 'C', value: '&nbsp;<strong>C</strong>' }
-                        ]
-                    });
-                }
+                selector: '#texteditor'
+                //toolbar: "styleselect | bold italic | accords",
+                //menubar: false,
+                //setup: function (editor) {
+                //    editor.addButton('accords', {
+                //        type: 'listbox',
+                //        text: 'Accords',
+                //        icon: false,
+                //        onselect: function (e) {
+                //            editor.insertContent(this.value());
+                //        },
+                //        values: [
+                //          { text: 'Am', value: '&nbsp;<strong>Am</strong>' },
+                //          { text: 'Dm', value: '&nbsp;<strong>Dm</strong>' },
+                //          { text: 'C', value: '&nbsp;<strong>C</strong>' }
+                //        ]
+                //    });
+                //}
             });
         };
 }]);

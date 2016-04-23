@@ -26,7 +26,15 @@ namespace GuitarSongs.API.Controllers
         [Route("singers")]
         public IHttpActionResult GetAllSingers()
         {
-            return Ok(SingerService.GetAllSingers());
+            var result = SingerService.GetAllSingers();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return BadRequest(result.Errors[0]);
+            }
         }
     }
 }

@@ -7,5 +7,7 @@ app.controller('indexController', ['$scope', '$location', 'authService', functio
     }
 
     $scope.authentication = authService.authentication;
-
+    $scope.search = function (searchText) {
+        $location.path('/search/' + searchText);
+    };
 }]);

@@ -9,6 +9,7 @@ app.factory('baseSongService', ['$http', 'ngAuthSettings', function ($http, ngAu
     baseSongsServiceFactory.getRecentSongs = _getRecentSongs;
     baseSongsServiceFactory.getSongById = _getSongById;
     baseSongsServiceFactory.searchFor = _searchFor;
+    baseSongsServiceFactory.addToFavorite = _addToFavorite;
 
     function _addBaseSong(baseSong) {
         return $http({
@@ -35,6 +36,12 @@ app.factory('baseSongService', ['$http', 'ngAuthSettings', function ($http, ngAu
 
     function _searchFor(text) {
         return $http.get(serviceBase + 'basesong/search/' + text).then(function (results) {
+            return results.data;
+        });
+    };
+
+    function _addToFavorite(baseSongId) {
+        return $http.post(serviceBase + 'basesong/addtofavourite/' + baseSongId).then(function (results) {
             return results.data;
         });
     };

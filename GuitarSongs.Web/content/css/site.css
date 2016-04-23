@@ -1,28 +1,10 @@
-﻿/* Share */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
+﻿
 .mdl-textfield.mdl-textfield--align-right.half-div{
     width:50%;
 }
 
-#searchInput {
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 12%;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 2px solid #29B6C0;
-}
-
-#footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #f5f5f5;
+.main-section{
+    background-color: #f3f3f3;
 }
 
 .text-muted {
@@ -47,6 +29,8 @@ html {
         box-sizing: border-box;
         padding: 10px;
         font-size: 16px;
+        width:300px;
+        min-width: 64px;
     }
 
         .form-login .form-control:focus {
@@ -65,7 +49,6 @@ html {
 .inline-text{
     font-size: 17px;
     color: #CFC6E0;
-    margin-right: 6%;
 }
 
 .shadow {
@@ -88,9 +71,8 @@ html {
 .baseSongInfoCard{
     width: 35%;
     background: rgba(34, 45, 119, 0.9);
-    margin-top: 1%;
+    margin: 0.5%;
     display:inline-block;
-    margin-right: 1%;
 }
 
 .baseSongInfoCard > .mdl-card__actions {
@@ -101,7 +83,7 @@ html {
     align-items: flex-start;
 }
 
-    .baseSongInfoCard > .mdl-card__title > h4 {
+    .baseSongInfoCard > .mdl-card__title > h5 {
         margin-top: 0;
     }
 
@@ -248,3 +230,77 @@ button:hover{
 .music-name{
     margin: 10px 10%;
 }
+
+.section-text{
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 16px;
+    width: 90%;
+}
+
+.name{
+    font-size: 1.5em;
+    width: 200px;
+    word-wrap: break-word;
+}
+
+/*User songs*/
+.demo-card-event.mdl-card {
+  width: 90%;
+  background: #3E4EB8;
+}
+.demo-card-event > .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.demo-card-event > .mdl-card__title {
+  align-items: flex-start;
+}
+.demo-card-event > .mdl-card__title > h4 {
+  margin-top: 0;
+}
+.demo-card-event > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+.demo-card-event > .mdl-card__actions > .material-icons {
+  padding-right: 10px;
+}
+.demo-card-event > .mdl-card__title,
+.demo-card-event > .mdl-card__actions,
+.demo-card-event > .mdl-card__actions > .mdl-button {
+  color: #fff;
+}
+
+.button-5m{
+    margin: 5px;
+}
+
+.big-text{
+    font-weight: 700;
+    font-size: 40px;
+    color: #757575;
+    margin-left: 35%;
+    margin-top: 35%;
+}
+
+.text-area{
+    margin: 10px;
+}
+
+.popup {
+    display:block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+

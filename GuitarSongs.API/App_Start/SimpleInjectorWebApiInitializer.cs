@@ -12,6 +12,9 @@ namespace GuitarSongs.API.App_Start
     using System.Configuration;
     using DalContracts.RepositoriesInterfaces;
     using System.Data.Common;
+    using BusinesContract.UnitOfWorkInterface;
+    using DalMsSql.UnitOfWork;
+    using BusinesContract.ServicesInterfaces;
     
     public static class SimpleInjectorWebApiInitializer
     {
@@ -37,17 +40,12 @@ namespace GuitarSongs.API.App_Start
             container.Register<DbConnection>(() => new SqlConnection(
                                    ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString()), Lifestyle.Scoped);
 
-            container.Register<IBaseSongRepository, BaseSongRepository>(Lifestyle.Scoped);
-            container.Register<IGenreRepository, GenreRepository>(Lifestyle.Scoped);
-            container.Register<ISingerRepository, SingerRepository>(Lifestyle.Scoped);
+            container.Register<IUnitOfWork>(() => new UnitOfWork(ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString()), Lifestyle.Scoped);         
 
             container.Register<IBaseSongService, BaseSongService>(Lifestyle.Scoped);
             container.Register<ISingerService, SingerService>(Lifestyle.Scoped);
             container.Register<IGenreService, GenreService>(Lifestyle.Scoped);
-
-            //container.Register<IBaseSongService>(() =>
-            //               new BaseSongService(new BaseSongRepository(new SqlConnection(
-            //                       ConfigurationManager.ConnectionStrings["GuitarDb"].ConnectionString.ToString()))), Lifestyle.Scoped);
+            container.Register<IUserSongService, UserSongService>(Lifestyle.Scoped);
         }
     }
 }

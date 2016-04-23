@@ -11,5 +11,6 @@ namespace DalContracts.RepositoriesInterfaces
     {
         IList<Genre> GetAllGenres();
         int? GetIdByGenreName(string genreName);
+        int AddGenre(Genre genre);
     }
 }
